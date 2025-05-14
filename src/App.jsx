@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Inicio from './pages/Inicio';
-import DetalleArtista from './pages/DetalleArtista';
+import Inicio from "./componentes/pages/Inicio";
+
+import DetalleArtista from "./componentes/pages/DetalleArtista";
 
 export default function App() {
   return (

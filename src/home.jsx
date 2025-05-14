@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSpotifyToken } from '../utils/getSpotifyToken';
 import axios from 'axios';
-import ArtistCard from '../components/ArtistCard';
+import ArtistCard from '../components/ArtistCard';  
 
 function Home() {
   const [search, setSearch] = useState('');

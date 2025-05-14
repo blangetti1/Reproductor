@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { obtenerTokenSpotify } from '../utils/obtenerTokenSpotify';
-import TarjetaArtista from '../components/TarjetaArtista';
+import obtenerTokenSpotify from "../utilidades/obtenerTokenSpotify.js";
+
+import TarjetaArtista from '../tarjetaartista';
 
 export default function Inicio() {
   const [busqueda, setBusqueda] = useState('');
