@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSpotifyToken, getArtist, getArtistAlbums } from '../utilidades/obtenerTokenSpotify.js';
+import { obtenerTokenSpotify, getArtist, getArtistAlbums } from '../utilidades/obtenerTokenSpotify';
 import TarjetaAlbum from '../tarjetaalbum.jsx';
 
 

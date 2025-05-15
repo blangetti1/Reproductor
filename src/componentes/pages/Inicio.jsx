@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
+import { obtenerTokenSpotify } from '../utilidades/obtenerTokenSpotify';
 import axios from 'axios';
-import obtenerTokenSpotify from "../utilidades/obtenerTokenSpotify.js";
-
 import TarjetaArtista from '../tarjetaartista';
 
 export default function Inicio() {
@@ -15,11 +14,17 @@ export default function Inicio() {
 
   const buscar = async () => {
     if (!busqueda) return;
-    const res = await axios.get('https://api.spotify.com/v1/search', {
-      headers: { Authorization: `Bearer ${token}` },
-      params: { q: busqueda, type: 'artist', limit: 10 },
-    });
-    setArtistas(res.data.artists.items);
+    if (!token) return;
+
+    try {
+      const res = await axios.get('https://api.spotify.com/v1/search', {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { q: busqueda, type: 'artist', limit: 10 },
+      });
+      setArtistas(res.data.artists.items);
+    } catch (error) {
+      console.error('Error al buscar artistas:', error);
+    }
   };
 
   return (
