@@ -1,14 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import styles from "./TarjetaArtista.module.css";
 
-export default function TarjetaArtista({ artista }) {
-  const navegar = useNavigate();
+function TarjetaArtista({ artista, onClick }) {
   return (
-    <div
-      onClick={() => navegar(`/artista/${artista.id}`)}
-      className="tarjeta-artista"
-    >
-      <img src={artista.images[0]?.url} alt={artista.name} width="100%" />
-      <p>{artista.name}</p>
+    <div className={styles.tarjeta} onClick={onClick}>
+      <img
+        src={artista.images[0]?.url}
+        alt={artista.name}
+        className={styles.imagen}
+      />
+      <p className={styles.nombre}>{artista.name}</p>
     </div>
   );
 }
+
+export default TarjetaArtista;

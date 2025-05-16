@@ -1,97 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { obtenerTokenSpotify, getArtist, getArtistAlbums } from '../utilidades/obtenerTokenSpotify';
-import TarjetaAlbum from '../tarjetaalbum.jsx';
-import styles from './DetalleArtista.module.css';
+import React, { useEffect, useState } from 'react';
+import { getArtist, getArtistAlbums } from '../utilidades/obtenerTokenSpotify';
 
-export default function DetalleArtista() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
+function DetalleArtista({ artistaId }) {
   const [artista, setArtista] = useState(null);
   const [albumes, setAlbumes] = useState([]);
-  const [token, setToken] = useState('');
-  const [esFavorito, setEsFavorito] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Cargar datos y token
-    const fetchData = async () => {
-      const storedToken = localStorage.getItem('spotifyToken');
-      if (!storedToken) {
-        const newToken = await obtenerTokenSpotify();
-        setToken(newToken);
-        localStorage.setItem('spotifyToken', newToken);
-        fetchArtistData(newToken);
-      } else {
-        setToken(storedToken);
-        fetchArtistData(storedToken);
+    const fetchDatosArtista = async () => {
+      try {
+        const datosArtista = await getArtist(artistaId);
+        setArtista(datosArtista);
+
+        const datosAlbumes = await getArtistAlbums(artistaId);
+        setAlbumes(datosAlbumes);
+      } catch (err) {
+        setError(err.message);
       }
     };
 
-    const fetchArtistData = async (currentToken) => {
-      const artistData = await getArtist(id, currentToken);
-      setArtista(artistData);
-      const albumsData = await getArtistAlbums(id, currentToken);
-      setAlbumes(albumsData.items);
-    };
-
-    fetchData();
-
-    // Verificar si artista es favorito
-    const favoritos = JSON.parse(localStorage.getItem('artistasFavoritos')) || [];
-    setEsFavorito(favoritos.includes(id));
-
-  }, [id]);
-
-  const toggleFavorito = () => {
-    const favoritos = JSON.parse(localStorage.getItem('artistasFavoritos')) || [];
-    let nuevosFavoritos;
-    if (esFavorito) {
-      // Quitar de favoritos
-      nuevosFavoritos = favoritos.filter(favId => favId !== id);
-    } else {
-      // Agregar a favoritos
-      nuevosFavoritos = [...favoritos, id];
+    if (artistaId) {
+      fetchDatosArtista();
     }
-    localStorage.setItem('artistasFavoritos', JSON.stringify(nuevosFavoritos));
-    setEsFavorito(!esFavorito);
-  };
+  }, [artistaId]);
 
-  if (!artista) {
-    return <div>Cargando información del artista...</div>;
-  }
+  if (error) return <p>Error: {error}</p>;
+  if (!artista) return <p>Cargando artista...</p>;
 
   return (
-    <div className={styles.contenedor}>
-      <button className={styles.botonVolver} onClick={() => navigate('/buscar')}>
-        Volver a búsqueda
-      </button>
-
-      <button onClick={toggleFavorito} style={{ marginBottom: '1rem' }}>
-        {esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-      </button>
-
-      <img src={artista.images[0]?.url} alt={artista.name} className={styles.imagenArtista} />
-      <h2 className={styles.nombreArtista}>{artista.name}</h2>
-
-      {artista.genres && artista.genres.length > 0 && (
-        <div className={styles.generos}>
-          {artista.genres.map((genero, index) => (
-            <span key={index}>{genero}</span>
-          ))}
-        </div>
+    <div>
+      <h2>{artista.name}</h2>
+      {artista.images && artista.images[0] && (
+        <img src={artista.images[0].url} alt={artista.name} width={200} />
       )}
+      <p>Seguidores: {artista.followers.total.toLocaleString()}</p>
+      <p>Géneros: {artista.genres.join(', ')}</p>
 
-      {albumes && albumes.length > 0 && (
-        <div>
-          <h3 className={styles.albumesTitulo}>Álbumes</h3>
-          <div className={styles.listaAlbumes}>
-            {albumes.map((album) => (
-              <TarjetaAlbum key={album.id} album={album} />
-            ))}
-          </div>
-        </div>
-      )}
+      <h3>Álbumes</h3>
+      {albumes.length === 0 && <p>No se encontraron álbumes.</p>}
+      <ul>
+        {albumes.map((album) => (
+          <li key={album.id}>
+            <p>{album.name}</p>
+            {album.images && album.images[0] && (
+              <img src={album.images[0].url} alt={album.name} width={100} />
+            )}
+            <p>Fecha de lanzamiento: {album.release_date}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
+
+export default DetalleArtista;
