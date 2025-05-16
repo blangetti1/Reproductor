@@ -5,7 +5,7 @@ export default function TarjetaArtista({ artista }) {
   return (
     <div
       onClick={() => navegar(`/artista/${artista.id}`)}
-      div className="tarjeta-artista"
+      className="tarjeta-artista"
     >
       <img src={artista.images[0]?.url} alt={artista.name} width="100%" />
       <p>{artista.name}</p>
