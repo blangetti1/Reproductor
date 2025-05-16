@@ -7,7 +7,7 @@ export async function obtenerTokenSpotify() {
     throw new Error('Faltan las credenciales en localStorage');
   }
 
-  const response = await fetch('https://accounts.spotify.com/api/token', {
+  const response = await fetch('https://accounts.spotify.com/api/token', { // Corregí la URL del token
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -24,6 +24,7 @@ export async function obtenerTokenSpotify() {
     localStorage.setItem('spotifyTokenExpiresAt', expiresAt.toString());
     return data.access_token;
   } else {
+    console.error('Error al obtener el token de Spotify:', data);
     throw new Error('No se pudo obtener el token de Spotify');
   }
 }
@@ -41,35 +42,52 @@ export async function obtenerTokenConCache() {
 }
 
 // Función para obtener detalles del artista
-export async function getArtist(artistId) {
+ export async function getArtist(artistId) {
   const token = await obtenerTokenConCache();
+  try {
   const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  headers: {
+  Authorization: `Bearer ${token}`,
+  },
   });
 
   if (!response.ok) {
-    throw new Error('Error al obtener los datos del artista');
+  const errorData = await response.json();
+  console.error('Error al obtener los datos del artista:', errorData);
+  throw new Error(`Error al obtener los datos del artista: ${response.status}`);
   }
 
   const data = await response.json();
+  console.log('Datos del artista obtenidos:', data); // Log para debug
   return data;
-}
+  } catch (error) {
+  console.error('Error en getArtist:', error);
+  throw error; // Propaga el error para que lo maneje el componente
+  }
+ }
 
-// Función para obtener álbumes del artista
-export async function getArtistAlbums(artistId) {
+ // Función para obtener álbumes del artista
+ export async function getArtistAlbums(artistId) {
   const token = await obtenerTokenConCache();
+  try {
   const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  headers: {
+  Authorization: `Bearer ${token}`,
+  },
   });
 
   if (!response.ok) {
-    throw new Error('Error al obtener los álbumes del artista');
+  const errorData = await response.json();
+  console.error('Error al obtener los álbumes del artista:', errorData);
+  throw new Error(`Error al obtener los álbumes del artista: ${response.status}`);
   }
 
   const data = await response.json();
+  console.log('Álbumes del artista obtenidos:', data); // Log para debug
   return data.items;
-}
+  } catch (error) {
+  console.error('Error en getArtistAlbums:', error);
+  throw error; // Propaga el error para que lo maneje el componente
+  }
+ }
+

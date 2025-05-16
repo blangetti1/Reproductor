@@ -20,10 +20,14 @@
   height: auto;
   border-radius: 0.75rem;
   margin-bottom: 0.75rem;
+  object-fit: cover; /* Añadido para mantener la proporción de la imagen */
 }
 
 .album-name {
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
+  white-space: nowrap; /* Evita que el texto se rompa */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  text-overflow: ellipsis; /* Muestra puntos suspensivos para indicar desbordamiento */
 }

@@ -23,18 +23,20 @@ export default function Login({ onCredencialesGuardadas }) {
       <h2>Login - Configurar Credenciales Spotify</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>CLIENT_ID:</label>
+          <label htmlFor="client_id">CLIENT_ID:</label>
           <input
             type="text"
+            id="client_id"
             value={clientId}
             onChange={(e) => setClientId(e.target.value)}
             style={{ width: '100%', marginBottom: '1rem' }}
           />
         </div>
         <div>
-          <label>CLIENT_SECRET:</label>
+          <label htmlFor="client_secret">CLIENT_SECRET:</label>
           <input
             type="password"
+            id="client_secret"
             value={clientSecret}
             onChange={(e) => setClientSecret(e.target.value)}
             style={{ width: '100%', marginBottom: '1rem' }}
@@ -42,6 +44,12 @@ export default function Login({ onCredencialesGuardadas }) {
         </div>
         <button type="submit">Guardar Credenciales</button>
       </form>
+      <p style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#777' }}>
+        Necesitas obtener tus propias credenciales de la API de Spotify desde el{' '}
+        <a href="https://developer.spotify.com/dashboard/" target="_blank" rel="noopener noreferrer">
+          Dashboard de Desarrollador de Spotify
+        </a>.
+      </p>
     </div>
   );
 }

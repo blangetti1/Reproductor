@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getArtist, getArtistAlbums } from '../utilidades/obtenerTokenSpotify';
+import styles from './DetalleArtista.module.css'; // Importa los estilos
 
 function DetalleArtista({ artistaId }) {
   const [artista, setArtista] = useState(null);
@@ -28,17 +29,28 @@ function DetalleArtista({ artistaId }) {
   if (!artista) return <p>Cargando artista...</p>;
 
   return (
-    <div>
-      <h2>{artista.name}</h2>
+    <div className={styles.contenedor}> {/* Aplica el contenedor de estilos */}
+      <h2 className={styles.nombreArtista}>{artista.name}</h2> {/* Aplica estilo al nombre */}
       {artista.images && artista.images[0] && (
-        <img src={artista.images[0].url} alt={artista.name} width={200} />
+        <img
+          src={artista.images[0].url}
+          alt={artista.name}
+          width={200}
+          className={styles.imagenArtista} // Aplica estilo a la imagen
+        />
       )}
       <p>Seguidores: {artista.followers.total.toLocaleString()}</p>
-      <p>Géneros: {artista.genres.join(', ')}</p>
+      {artista.genres && artista.genres.length > 0 && (
+        <div className={styles.generos}> {/* Contenedor de géneros */}
+          Géneros: {artista.genres.map((genre, index) => (
+            <span key={index}>{genre}</span> // Estilo para cada género
+          ))}
+        </div>
+      )}
 
-      <h3>Álbumes</h3>
+      <h3 className={styles.albumesTitulo}>Álbumes</h3> {/* Aplica estilo al título de álbumes */}
       {albumes.length === 0 && <p>No se encontraron álbumes.</p>}
-      <ul>
+      <ul className={styles.listaAlbumes}> {/* Aplica estilo a la lista de álbumes */}
         {albumes.map((album) => (
           <li key={album.id}>
             <p>{album.name}</p>
