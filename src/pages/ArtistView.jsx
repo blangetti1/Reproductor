@@ -15,7 +15,7 @@ const ArtistDetailView = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  const handleBack = () => navigate("/");
+  const handleBack = () => navigate("/home");
 
   const { toggleFavorite, isFavorite } = useFavorites();
 
