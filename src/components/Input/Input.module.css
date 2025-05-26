@@ -1,21 +1,21 @@
 /* Base del contenedor del input */
 .inputWrapper {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   width: 100%;
 }
 
 /* Estilos del label */
 .label {
   display: block;
-  font-size: 0.9rem;
-  color: #333;
-  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
   font-weight: 500;
   transition: color 0.2s ease-in-out;
 }
 
 .labelError {
-  color: #d9534f; /* Color para el label cuando hay un error */
+  color: #e74c3c;
 }
 
 /* Contenedor del input y los iconos */
@@ -23,50 +23,49 @@
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 2px solid #e0e6ed;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .inputContainer:focus-within {
-  border-color: #007bff; /* Color de foco */
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra de foco */
+  border-color: #3498db;
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
 }
 
 .inputContainerError {
-  border-color: #d9534f; /* Color de borde para error */
+  border-color: #e74c3c;
 }
 
 .inputContainerError:focus-within {
-  border-color: #d9534f;
-  box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.25);
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.15);
 }
 
 /* Estilos del input real */
 .input {
-  flex-grow: 1; /* Permite que el input ocupe el espacio disponible */
-  padding: 0.75rem 1rem;
+  flex-grow: 1;
+  padding: 0.85rem 1.2rem;
   font-size: 1rem;
-  color: #333;
+  color: #2c3e50;
   border: none;
-  background-color: transparent; /* Para que el fondo del contenedor se vea */
-  outline: none; /* Eliminar el outline por defecto, ya lo manejamos en el contenedor */
-  border-radius: 6px;
-  width: 100%; /* Asegura que ocupe todo el ancho disponible en su contenedor */
+  background-color: transparent;
+  outline: none;
+  border-radius: 8px;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 .input::placeholder {
-  color: #999;
+  color: #95a5a6;
 }
 
 .input:disabled {
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
   cursor: not-allowed;
-}
-
-.inputError {
-  /* No es necesario un borde adicional aquí, el contenedor ya lo maneja */
+  color: #95a5a6;
 }
 
 /* Estilos para los iconos */
@@ -75,14 +74,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.75rem;
-  color: #666; /* Color de los iconos */
+  padding: 0 1rem;
+  color: #7f8c8d;
+  transition: color 0.3s ease;
+}
+
+.inputContainer:focus-within .iconLeft,
+.inputContainer:focus-within .iconRight {
+  color: #3498db;
+}
+
+.inputContainerError .iconLeft,
+.inputContainerError .iconRight {
+  color: #e74c3c;
 }
 
 /* Mensaje de error */
 .errorMessage {
-  color: #d9534f;
-  font-size: 0.8rem;
-  margin-top: 0.3rem;
-  margin-bottom: 0; /* Eliminar margen inferior por defecto del p */
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }

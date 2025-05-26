@@ -18,8 +18,8 @@ const LoginView = () => {
     setError("");
     await getAccessToken(clientId, clientSecret)
       .then(() => {
-        alert("Todo ok");
-        navigate("/");
+        alert("Registrado correctamente");
+        navigate("/home");  // Cambiado de "/" a "/home"
       })
       .catch((err) => {
         console.log(err);
