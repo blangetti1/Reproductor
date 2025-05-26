@@ -1,0 +1,88 @@
+/* Base del contenedor del input */
+.inputWrapper {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Estilos del label */
+.label {
+  display: block;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.labelError {
+  color: #d9534f; /* Color para el label cuando hay un error */
+}
+
+/* Contenedor del input y los iconos */
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.inputContainer:focus-within {
+  border-color: #007bff; /* Color de foco */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra de foco */
+}
+
+.inputContainerError {
+  border-color: #d9534f; /* Color de borde para error */
+}
+
+.inputContainerError:focus-within {
+  border-color: #d9534f;
+  box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.25);
+}
+
+/* Estilos del input real */
+.input {
+  flex-grow: 1; /* Permite que el input ocupe el espacio disponible */
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #333;
+  border: none;
+  background-color: transparent; /* Para que el fondo del contenedor se vea */
+  outline: none; /* Eliminar el outline por defecto, ya lo manejamos en el contenedor */
+  border-radius: 6px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible en su contenedor */
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.inputError {
+  /* No es necesario un borde adicional aquí, el contenedor ya lo maneja */
+}
+
+/* Estilos para los iconos */
+.iconLeft,
+.iconRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  color: #666; /* Color de los iconos */
+}
+
+/* Mensaje de error */
+.errorMessage {
+  color: #d9534f;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0; /* Eliminar margen inferior por defecto del p */
+}
